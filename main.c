@@ -6,119 +6,61 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:26:57 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/19 18:03:13 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/09/19 21:38:32 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "filler.h"
 
-
-static int		findytab(char *str)
+int	main()
 {
-	int		i;
-	int		j;
-	int		k;
-	char	tmp[4];
-
-	i = 0;
-	j = 0;
-	k = 0;
-	while (str[i])
-	{
-		if (ft_isdigit(str[i]) == 1 && k == 2)
-			tmp[j++] = str[i];
-		if (str[i] == ' ')
-			k++;
-		i++;
-	}
-	return(ft_atoi(tmp));
-}
-
-static int		findxtab(char *str)
-{
-	int		i;
-	int		j;
-	int		k;
-	char	tmp[4];
-
-	i = 0;
-	j = 0;
-	k = 0;
-	while (str[i])
-	{
-		if (ft_isdigit(str[i]) == 1)
-			tmp[j++] = str[i];
-		if (str[i] == ' ')
-			k++;
-		i++;
-		if (k == 2)
-			break ;
-	}
-	return(ft_atoi(tmp));
-}
-
-int	main(int ac, char **av)
-{
+	t_env	*env;
 	char	*str;
 	FILE	*fptr;
 	char	*line;
-	char	**tab;
 	int		x;
-	int		y;
 	int		limit;
-	int		j;
-	char	**piece;
-	int		k;
+	int		i;
 
-	k = 0;
-	av = 0;
-	j = 0;
+	env = ft_processinit();
+	i = 0;
 	limit = 2;
-	if (ac == 1)
+	fptr = fopen("../data.txt", "a");
+	str = "2 3\n";
+	while (i <= limit)
 	{
-		fptr = fopen("../data.txt", "w");
-		str = "2 3\n";
-		int i = 0;
-		while (i <= limit)
+		get_next_line(0, &line);
+		if (line[0] == 'P' && line[1] == 'l')
 		{
-			get_next_line(0, &line);
-			if (line[0] == 'P')
-			{
-				x = findxtab(line);
-				y = findytab(line);
-				if (line[1] == 'i')
-				{
-					if (!(piece = (char **)malloc(sizeof(char *) * x)))
-						return (0);
-				limit = x + i;
-				}
-				else
-				{
-					if (!(tab = (char **)malloc(sizeof(char *) * x)))
-						return (0);
-				limit = x + 2 + i;
-				}
-				fprintf(fptr, "x = %d\ny = %d\n", x, y);
-			}
-			if (line[0] == '0')
-			{
-				tab[j] = ft_strdup(line);
-				fprintf(fptr, "%s\n", tab[j]);
-				j++;
-			}
-			if (line[0] == '.' || line[0] == '*')
-			{
-				piece[k] = ft_strdup(line);
-				fprintf(fptr, "%s\n", piece[k]);
-				k++;
-			}
-			i++;
-			free(line);
+			if ((x = create_tab(env, line, 'M')) == 0)
+				return (0);
+			limit = x + 2 + i;
 		}
-		i = 0;
-		ft_putstr_fd(str, 1); 
-		fclose(fptr);
+		if (line[0] == 'P' && line[1] == 'i')
+		{
+			if ((x = create_tab(env, line, 'P')) == 0)
+				return (0);
+			limit = x + i;
+		}
+		if (line[0] == '0')
+			create_linetab(env, line);
+		if (line[0] == '.' || line[0] == '*')
+			create_linepiece(env, line);
+		i++;
+		free(line);
 	}
-	printf("%d\n", atoi("24"));
+	i = 0;
+	while (LINETAB)
+	{
+			fprintf(fptr, "x = %d | %s\n", LINETAB->x, LINETAB->line);
+		LINETAB = LINETAB->next;
+	}
+	while (LINEPIECE)
+	{
+		fprintf(fptr, "x = %d | %s\n", LINEPIECE->x, LINEPIECE->line);
+		LINEPIECE = LINEPIECE->next;
+	}
+	fclose(fptr);
+	ft_putstr_fd(str, 1); 
 	return (0);
 }

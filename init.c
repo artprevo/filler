@@ -6,61 +6,62 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 19:02:43 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/19 18:31:14 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/09/19 21:38:20 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "filler.h"
 
-static t_env	*ft_initenv(char *str)
+static t_env	*ft_initenv()
 {
 	t_env	*new;
 
 	if (!(new = (t_env *)malloc(sizeof(t_env))))
 		return (NULL);
-	new->str = str;
-	new->form = NULL;
-	return (new);
-}
-
-static t_opt	*ft_initopt(char *str)
-{
-	t_opt	*new;
-
-	str = 0;
-	if (!(new = (t_opt *)malloc(sizeof(t_opt))))
-		return (NULL);
-	new->posi = 0;
-	new->hash = 0;
-	new->lzero = 0;
-	new->space = 0;
-	new->lalign = 0;
-	return (new);
-}
-
-static t_form	*ft_initform(char *str)
-{
-	t_form	*new;
-
-	str = 0;
-	if (!(new = (t_form *)malloc(sizeof(t_form))))
-		return (NULL);
-	new->size = 48;
-	new->width = 0;
-	new->precision = 0;
-	new->content = NULL;
+	new->tab = NULL;
+	new->piece = NULL;
+	new->xtab = 0;
+	new->ytab = 0;
+	new->xpiece = 0;
+	new->ypiece = 0;
+	new->linetab = NULL;
+	new->linepiece = NULL;
 	new->result = NULL;
-	new->conversion = 0;
-	new->opt = NULL;
+	return (new);
+}
+
+t_linetab			*ft_initlinetab(char *str, int x, int empty)
+{
+	t_linetab	*new;
+
+	if (!(new = (t_linetab *)malloc(sizeof(t_linetab))))
+		return (NULL);
+	new->line = ft_strdup(str);
+	new->x = x;
+	new->empty = empty;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
 }
 
-t_env	*ft_processinit(char *str)
+t_linepiece			*ft_initlinepiece(char *str, int x, int empty)
+{
+	t_linepiece		*new;;
+
+	if (!(new = (t_linepiece *)malloc(sizeof(t_linepiece))))
+		return (NULL);
+	new->line = ft_strdup(str);
+	new->x = x;
+	new->empty = empty;
+	new->next = NULL;
+	new->prev = NULL;
+	return (new);
+}
+
+t_env	*ft_processinit()
 {
 	t_env	*env;
 
-	env = ft_initenv(str);
+	env = ft_initenv();
 	return (env);
 }
