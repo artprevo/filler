@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 18:39:36 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/19 21:38:35 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/09/21 17:43:45 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,19 @@ void			create_linetab(t_env *env, char *str)
 	}
 }
 
-void			create_linepiece(t_env *env, char *str)
+void			create_linepiece(t_env *env, char *str, int j)
 {
 	t_linepiece	*new;
 	t_linepiece	*tmp;
 
 	if (LINEPIECE == NULL)
 	{
-		new = ft_initlinepiece(str, findxtab(str), ft_isempty(str));
+		new = ft_initlinepiece(str, j, ft_isempty(str));
 		LINEPIECE = new;
 	}
 	else
 	{
-		new = ft_initlinepiece(str, findxtab(str), ft_isempty(str));
+		new = ft_initlinepiece(str, j, ft_isempty(str));
 		tmp = LINEPIECE;
 		while (tmp->next)
 			tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:27:52 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/19 21:28:45 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/09/21 17:41:50 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define LINETAB	(env->linetab)
 # define LINEPIECE	(env->linepiece)
 # define RESULT		(env->result)
+# define POS		(env->pos)
 
 typedef	struct			s_env
 {
@@ -28,10 +29,25 @@ typedef	struct			s_env
 	int					ytab;
 	int					xpiece;
 	int					ypiece;
+	int					order;
 	struct s_linetab	*linetab;
 	struct s_linepiece	*linepiece;
 	struct s_result		*result;
+	struct s_pos		*pos;
 }						t_env;
+
+typedef	struct			s_pos
+{
+	int					xme;
+	int					yme;
+	int					xhim;
+	int					yhim;
+	int					top;
+	char				me;
+	char				him;
+	struct s_pos		*next;
+	struct s_pos		*prev;
+}						t_pos;
 
 typedef struct			s_linetab
 {
@@ -74,7 +90,7 @@ t_env   			*ft_processinit();
  * parsing.c
  */
 int             create_tab(t_env *env, char *str, char c);
-void            create_linepiece(t_env *env, char *str);
+void            create_linepiece(t_env *env, char *str, int j);
 void            create_linetab(t_env *env, char *str);
 
 /*
@@ -82,5 +98,17 @@ void            create_linetab(t_env *env, char *str);
  */
 int     ft_isempty(char *str);
 
+/*
+ * position.c
+ */
+void    findposition(t_env *env);
+
+/*
+ * freeall.c
+ */
 void    tafreetatoucompri(t_env *env);
+// int		testpos(t_env *env);
+int		emptyline(char *line);
+char	*resultis(t_result *result);
+t_result    *assignres(t_env *env);
 #endif

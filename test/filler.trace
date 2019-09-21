@@ -1,4 +1,5 @@
-seed = 6847
+seed = 9111
+players/artprevo.filler: Segfault at 1
 players/superjeannot.filler won
 Score:
-0AGAINST1
+1AGAINST1

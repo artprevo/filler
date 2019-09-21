@@ -6,11 +6,25 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 19:02:43 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/19 21:38:20 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/09/21 17:46:18 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+
+static t_pos		*ft_initpos()
+{
+	t_pos		*new;
+	
+	if (!(new = (t_pos *)malloc(sizeof(t_pos))))
+		return (NULL);
+	new->xme = -1;
+	new->yme = -1;
+	new->xhim = -1;
+	new->yhim = -1;
+	new->top = -1;
+	return (new);
+}
 
 static t_env	*ft_initenv()
 {
@@ -27,6 +41,7 @@ static t_env	*ft_initenv()
 	new->linetab = NULL;
 	new->linepiece = NULL;
 	new->result = NULL;
+	new->pos = ft_initpos();
 	return (new);
 }
 
