@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:27:52 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/21 17:41:50 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/09/25 21:55:31 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,16 @@ typedef	struct			s_env
 	int					xpiece;
 	int					ypiece;
 	int					order;
+	char				me;
+	char				him;
+	int					count;
+	int					xhim;
+	int					yhim;
+	int					init;
 	struct s_linetab	*linetab;
 	struct s_linepiece	*linepiece;
 	struct s_result		*result;
-	struct s_pos		*pos;
 }						t_env;
-
-typedef	struct			s_pos
-{
-	int					xme;
-	int					yme;
-	int					xhim;
-	int					yhim;
-	int					top;
-	char				me;
-	char				him;
-	struct s_pos		*next;
-	struct s_pos		*prev;
-}						t_pos;
 
 typedef struct			s_linetab
 {
@@ -61,6 +53,7 @@ typedef struct			s_linetab
 typedef struct			s_linepiece
 {
 	char				*line;
+	int					truey;
 	int					x;
 	int					empty;
 	struct s_linepiece	*next;
@@ -72,9 +65,6 @@ typedef struct			s_result
 	int					x;
 	int					y;
 	int					distance;
-	struct s_result		*next;
-	struct s_result		*prev;
-	int					best;
 }						t_result;
 
 int	main();
@@ -82,6 +72,7 @@ int	main();
 /*
  * init.c
  */
+t_result        	*ft_initresult();
 t_linetab           *ft_initlinetab(char *str, int x, int empty);
 t_linepiece         *ft_initlinepiece(char *str, int x, int empty);
 t_env   			*ft_processinit();
@@ -106,9 +97,14 @@ void    findposition(t_env *env);
 /*
  * freeall.c
  */
-void    tafreetatoucompri(t_env *env);
+t_env   *tafreetatoucompri(t_env *env);
+
 // int		testpos(t_env *env);
-int		emptyline(char *line);
-char	*resultis(t_result *result);
+
+int    gatherresult(t_env *env);
 t_result    *assignres(t_env *env);
+void    printstr(char *str);
+void    printnbr(int nbr);
+int		findhim(t_env *env);
+int		distance(t_env *env, int x, int y);
 #endif

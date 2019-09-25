@@ -6,39 +6,51 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 21:24:07 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/21 18:06:43 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/09/25 21:39:40 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "filler.h"
 
-void	tafreetatoucompri(t_env *env)
+t_env	*tafreetatoucompri(t_env *env)
 {
 	t_linetab	*tab;
+	t_linetab	*tmpt;
 	t_linepiece	*piece;
-	t_result	*result;
-	
+	t_linepiece	*tmpp;
+	int			order;
+	t_env		*new;
+
+	order = env->order;
 	free(env->tab);
 	free(env->piece);
-	while (LINETAB)
+	if (LINETAB)
 	{
-		free(LINETAB->line);
-		tab = LINETAB->next;
-		free(LINETAB);
-		LINETAB = tab;
+		tab = LINETAB;
+		while (tab)
+		{
+			free(tab->line);
+			tmpt = tab->next;
+			free(tab);
+			tab = tmpt;
+		}
 	}
-	while (LINEPIECE)
+	if (LINEPIECE)
 	{
-		free(LINEPIECE->line);
-		piece = LINEPIECE->next;
-		free(LINEPIECE);
-		LINEPIECE = piece;
+		piece = LINEPIECE;
+		while (piece)
+		{
+			free(piece->line);
+			tmpp = piece->next;
+			free(piece);
+			piece = tmpp;
+		}
 	}
-	while (RESULT)
-	{
-		result = RESULT->next;
+	if (RESULT)
 		free(RESULT);
-		RESULT = result;
-	}
 	free(env);
+	new = ft_processinit();
+	new->order = order;
+	new->init = 1;
+	return (new);
 }

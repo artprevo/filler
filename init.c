@@ -6,23 +6,21 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 19:02:43 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/21 17:46:18 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/09/25 21:35:23 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static t_pos		*ft_initpos()
+t_result		*ft_initresult(int x, int y)
 {
-	t_pos		*new;
+	t_result		*new;
 	
-	if (!(new = (t_pos *)malloc(sizeof(t_pos))))
+	if (!(new = (t_result *)malloc(sizeof(t_result))))
 		return (NULL);
-	new->xme = -1;
-	new->yme = -1;
-	new->xhim = -1;
-	new->yhim = -1;
-	new->top = -1;
+	new->x = x;
+	new->y = y;
+	new->distance = -1;
 	return (new);
 }
 
@@ -38,10 +36,10 @@ static t_env	*ft_initenv()
 	new->ytab = 0;
 	new->xpiece = 0;
 	new->ypiece = 0;
+	new->init = 0;
 	new->linetab = NULL;
 	new->linepiece = NULL;
 	new->result = NULL;
-	new->pos = ft_initpos();
 	return (new);
 }
 
@@ -59,6 +57,20 @@ t_linetab			*ft_initlinetab(char *str, int x, int empty)
 	return (new);
 }
 
+static	int			truey(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '*')
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
 t_linepiece			*ft_initlinepiece(char *str, int x, int empty)
 {
 	t_linepiece		*new;;
@@ -66,6 +78,7 @@ t_linepiece			*ft_initlinepiece(char *str, int x, int empty)
 	if (!(new = (t_linepiece *)malloc(sizeof(t_linepiece))))
 		return (NULL);
 	new->line = ft_strdup(str);
+	new->truey = truey(str);
 	new->x = x;
 	new->empty = empty;
 	new->next = NULL;
