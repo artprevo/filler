@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 15:57:56 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/25 21:55:30 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:28:18 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static int		checkpostab(t_env *env, t_linetab *tab, int i, char c)
 	char	me;
 
 	me = env->me;
-	if (c == '*' && (i < 4 || i + 4 > env->xtab))
-			return (0);
 	if (c == '.')
 		return (1);
 	if (c == '*' && (tab->line[i] == me || tab->line[i] == me + 32))
@@ -46,7 +44,11 @@ static int		checkpostab(t_env *env, t_linetab *tab, int i, char c)
 		if (env->count > 1)
 			return (0);
 	}
-	if (c == env->him || c == env->him + 32)
+	if (c == '*' && i < 4)
+		return (0);
+	if (c == '*' && i - 4 >= env->ytab)
+		return (0);
+	if (c == '*' && (tab->line[i] == env->him || tab->line[i] == env->him + 32))
 		return (0);
 	return (1);
 }
@@ -74,28 +76,28 @@ static int		testpos(t_env *env, int x, int i)
 			k = i;
 			while (piece->line[j])
 			{
-			//	if (tab->empty == 1)
-			//		break ;
+	//			if (tab->empty == 1)
+	//				break ;
 				if (checkpostab(env, tab, k, piece->line[j]) == 0)
 					return (0);
 				k++;
 				j++;
 			}
+			piece = piece->next;
 			if (tab->next)
 				tab = tab->next;
 			else
 				return (0);
-			piece = piece->next;
 		}
 		if (env->count == 1)
 		{
-		//	if (!RESULT)
+	//		if (!RESULT)
 				add_result(env, x, i, distance(env, x, i));
-		//	else
-		//	{
-			//	if (distance(env, x, i) < RESULT->distance)
-		//			add_result(env, x, i, distance(env, x, i));
-		//	}
+	//		else
+	//		{
+	//			if (distance(env, x, i) < RESULT->distance)
+	//				add_result(env, x, i, distance(env, x, i));
+	//		}
 		}
 //	}
 	return (1);
@@ -106,28 +108,28 @@ int		gatherresult(t_env *env)
 	int		i;
 	t_linetab	*tab;
 
-	findhim(env);
 	tab = LINETAB;
 	if (env->order == 1)
 	{
 		env->me = 'O';
 		env->him = 'X';
 	}
-	else
+	if (env->order == 2)
 	{
 		env->me = 'X';
-		env->him = '0';
+		env->him = 'O';
 	}
+	findhim(env);
 	while (tab)
 	{
 		i = 4;
-		while (tab->line[i])
+		while (i <= env->ytab)
 		{
-			testpos(env, tab->x, i);
+			testpos(env, tab->x , i);
 			i++;
-			if (RESULT)
-				break ;
 		}
+		if (env->order == 2 && RESULT)
+			break ;
 		tab = tab->next;
 	}
 	if (!RESULT)

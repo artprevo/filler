@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:26:57 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/25 21:55:28 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:23:32 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ int	main()
 	int		i;
 	int		j;
 	t_result	*res;
+	FILE	*fptr;
 
+	fptr = fopen("../data.txt", "a");
 	env = ft_processinit();
 	while (1)
 	{
@@ -42,6 +44,7 @@ int	main()
 		limit = 2;
 		while (i <= limit)
 		{
+			line = 0;
 			get_next_line(0, &line);
 			if (line[0] == '$' && env->init == 0)
 			{
@@ -70,21 +73,29 @@ int	main()
 			i++;
 			free(line);
 		}
+		t_linetab	*linet;
+		t_linepiece	*linep;
+		linep = LINEPIECE;
+		linet = LINETAB;
+		while (linet)
+		{
+			fprintf(fptr, "%s\n", linet->line);
+			linet = linet->next;
+		}
+		while (linep)
+		{
+			fprintf(fptr, "%s\n", linep->line);
+			linep = linep->next;
+		}
+		truex(env);
 		if (gatherresult(env) == 0)
 			break ;
-		t_linetab	*linet;
-
-		linet = LINETAB;
-/*		while (linet)
-		{
-			printstr(linet->line);
-			linet = linet->next;
-		}*/
 		res = RESULT;
 		ft_putnbr_fd(res->x, 1);
 		ft_putchar_fd(' ', 1);
 		ft_putnbr_fd(res->y - 4, 1);
 		ft_putchar_fd('\n', 1);
+		fprintf(fptr, "%d %d\n", res->x, res->y - 4);
 		env = tafreetatoucompri(env);
 	}
 	env = tafreetatoucompri(env);

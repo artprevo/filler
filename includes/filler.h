@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:27:52 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/25 21:55:31 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/09/26 17:54:21 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FILLER_H
 
 # include "../libft/libft.h"
-# define BUFFER_SIZE 1000
+# define BUFFER_SIZE 1000000
 
 # define LINETAB	(env->linetab)
 # define LINEPIECE	(env->linepiece)
@@ -25,6 +25,7 @@ typedef	struct			s_env
 {
 	char				**tab;
 	char				**piece;
+	int					truex;
 	int					xtab;
 	int					ytab;
 	int					xpiece;
@@ -103,6 +104,7 @@ t_env   *tafreetatoucompri(t_env *env);
 
 int    gatherresult(t_env *env);
 t_result    *assignres(t_env *env);
+void	truex(t_env *env);
 void    printstr(char *str);
 void    printnbr(int nbr);
 int		findhim(t_env *env);

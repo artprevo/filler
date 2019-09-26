@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 21:24:07 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/25 21:39:40 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/09/26 17:52:55 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ t_env	*tafreetatoucompri(t_env *env)
 			piece = tmpp;
 		}
 	}
-	if (RESULT)
-		free(RESULT);
+	free(RESULT);
 	free(env);
 	new = ft_processinit();
 	new->order = order;

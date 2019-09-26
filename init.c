@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 19:02:43 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/25 21:35:23 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:23:29 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,16 @@ static t_env	*ft_initenv()
 		return (NULL);
 	new->tab = NULL;
 	new->piece = NULL;
+	new->truex = 0;
 	new->xtab = 0;
 	new->ytab = 0;
 	new->xpiece = 0;
+	new->order = 0;
+	new->me = 0;
+	new->him = 0;
+	new->xhim = 0;
+	new->yhim = 0;
+	new->count = 0;
 	new->ypiece = 0;
 	new->init = 0;
 	new->linetab = NULL;
@@ -69,6 +76,30 @@ static	int			truey(char *str)
 		i++;
 	}
 	return (0);
+}
+
+void		truex(t_env *env)
+{
+	int			i;
+	int			x;
+	t_linepiece	*piece;
+
+	x = 0;
+	piece = LINEPIECE;
+	while (piece)
+	{
+		i = 0;
+		while (i < env->ypiece && piece->line[i] == '.')
+			i++;
+		if (i + 1 == env->ypiece && piece)
+		{
+			x++;
+			piece = piece->next;
+		}
+		else
+			break ;
+	}
+	env->truex = x;
 }
 
 t_linepiece			*ft_initlinepiece(char *str, int x, int empty)
