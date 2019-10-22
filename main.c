@@ -6,13 +6,13 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:26:57 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/26 18:23:32 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/10/18 17:55:04 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "filler.h"
 
-// COMPRENDRE POURQUOI LES MAPS PLANTENT
+// jui perds contre abanlin et hcao
 
 void    printnbr(int nbr)
 {
@@ -45,12 +45,10 @@ int	main()
 		while (i <= limit)
 		{
 			line = 0;
-			get_next_line(0, &line);
+			if (get_next_line(0, &line) == -1)
+				break ;
 			if (line[0] == '$' && env->init == 0)
-			{
 				env->order = atoi(&line[10]);
-				env->init = 1;
-			}
 			if (line[0] == 'P' && line[1] == 'l')
 			{
 				if ((x = create_tab(env, line, 'M')) == 0)
@@ -73,29 +71,18 @@ int	main()
 			i++;
 			free(line);
 		}
-		t_linetab	*linet;
-		t_linepiece	*linep;
-		linep = LINEPIECE;
-		linet = LINETAB;
-		while (linet)
-		{
-			fprintf(fptr, "%s\n", linet->line);
-			linet = linet->next;
-		}
-		while (linep)
-		{
-			fprintf(fptr, "%s\n", linep->line);
-			linep = linep->next;
-		}
 		truex(env);
+		bottompiece(env);
 		if (gatherresult(env) == 0)
-			break ;
-		res = RESULT;
-		ft_putnbr_fd(res->x, 1);
-		ft_putchar_fd(' ', 1);
-		ft_putnbr_fd(res->y - 4, 1);
-		ft_putchar_fd('\n', 1);
-		fprintf(fptr, "%d %d\n", res->x, res->y - 4);
+			ft_putstr("0 0\n");
+		else
+		{
+			res = RESULT;
+			ft_putnbr_fd(res->x - env->truex, 1);
+			ft_putchar_fd(' ', 1);
+			ft_putnbr_fd(res->y - 4, 1);
+			ft_putchar_fd('\n', 1);
+		}
 		env = tafreetatoucompri(env);
 	}
 	env = tafreetatoucompri(env);

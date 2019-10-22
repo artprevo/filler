@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:27:52 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/26 17:54:21 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/10/18 17:38:51 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # define LINEPIECE	(env->linepiece)
 # define RESULT		(env->result)
 # define POS		(env->pos)
+# define HIM		(env->him)
+# define ME			(env->me)
+# define DOM		(env->dominance)
+# define ORIGIN	(env->origin)
 
 typedef	struct			s_env
 {
@@ -34,12 +38,19 @@ typedef	struct			s_env
 	char				me;
 	char				him;
 	int					count;
+	int 				score;
+	int				distance;
 	int					xhim;
 	int					yhim;
+	int					xme;
+	int					yme;
 	int					init;
+	int 				coeff;
 	struct s_linetab	*linetab;
 	struct s_linepiece	*linepiece;
 	struct s_result		*result;
+	struct s_dominance	*dominance;
+	struct s_origin			*origin;
 }						t_env;
 
 typedef struct			s_linetab
@@ -66,7 +77,28 @@ typedef struct			s_result
 	int					x;
 	int					y;
 	int					distance;
+	int 				score;
+	int 				coeff;
 }						t_result;
+
+typedef struct			s_dominance
+{
+	int					z1;
+	int 				z2;
+	int 				z3;
+	int 				z4;
+	int 				xstart;
+	int 				ystart;
+	int 				result;
+}										t_dominance;
+
+typedef struct			s_origin
+{
+	int					xme;
+	int					yme;
+	int					xhim;
+	int					yhim;
+}										t_origin;
 
 int	main();
 
@@ -100,7 +132,8 @@ void    findposition(t_env *env);
  */
 t_env   *tafreetatoucompri(t_env *env);
 
-// int		testpos(t_env *env);
+void		origin(t_env *env);
+int     origindistance(t_env *env, int x);
 
 int    gatherresult(t_env *env);
 t_result    *assignres(t_env *env);
@@ -108,5 +141,9 @@ void	truex(t_env *env);
 void    printstr(char *str);
 void    printnbr(int nbr);
 int		findhim(t_env *env);
+int		findme(t_env *env);
 int		distance(t_env *env, int x, int y);
+void bottompiece(t_env *env);
+void dominance (t_env *env);
+int absolute(int i);
 #endif

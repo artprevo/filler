@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 19:02:43 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/26 18:23:29 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/10/18 17:43:41 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_result		*ft_initresult(int x, int y)
 {
 	t_result		*new;
-	
+
 	if (!(new = (t_result *)malloc(sizeof(t_result))))
 		return (NULL);
 	new->x = x;
@@ -89,9 +89,13 @@ void		truex(t_env *env)
 	while (piece)
 	{
 		i = 0;
-		while (i < env->ypiece && piece->line[i] == '.')
+		while (piece->line[i])
+		{
+			if (piece->line[i] != '.')
+				break ;
 			i++;
-		if (i + 1 == env->ypiece && piece)
+		}
+		if (i == env->ypiece && piece)
 		{
 			x++;
 			piece = piece->next;

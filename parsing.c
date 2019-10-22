@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 18:39:36 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/26 16:18:17 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/10/18 18:19:54 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ static int		findxtab(char *str)
 	int		i;
 	int		j;
 	int		k;
-	char	tmp[4];
+	char		*tmp;
 
+	tmp = ft_strnew(4);
 	i = 0;
 	j = 0;
 	k = 0;
@@ -35,7 +36,9 @@ static int		findxtab(char *str)
 		if (k == 2)
 			break ;
 	}
-	return (ft_atoi(tmp));
+	i = ft_atoi(tmp);
+	free(tmp);
+	return (i);
 }
 
 static int		findytab(char *str)
