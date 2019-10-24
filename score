@@ -1,0 +1,91 @@
+srcs/algo.c:	score += absolute(env->xtab / 2 - x);
+srcs/algo.c:	score += absolute(env->ytab / 2 - y);
+srcs/algo.c:	if (dom->result == 1 && (x <= env->xtab / 2 && y <= env->ytab / 2 + 4))
+srcs/algo.c:		env->coeff += 200;
+srcs/algo.c:	if (dom->result == 2 && (x <= env->xtab / 2 && y >= env->ytab / 2 + 4))
+srcs/algo.c:		env->coeff += 200;
+srcs/algo.c:	if (dom->result == 3 && (x >= env->xtab / 2 && y <= env->ytab / 2 + 4))
+srcs/algo.c:		env->coeff += 200;
+srcs/algo.c:	if (dom->result == 4 && (x >= env->xtab / 2 && y >= env->ytab / 2 + 4))
+srcs/algo.c:		env->coeff += 200;
+srcs/algo.c:		env->coeff -= 300;
+srcs/algo.c:		env->coeff += 100;
+srcs/algo.c:	if (y == env->ytab / 2 || x == env->xtab / 2)
+srcs/algo.c:		env->coeff += 200;
+srcs/algo.c:	env->coeff += 400 - (200 * adjacent(env, x, y, 0));
+srcs/algo.c:	if (env->order == 1)
+srcs/algo.c:		env->coeff += 2 * origindistance(env, x, y) + 4 * distance(env, x, y);
+srcs/algo.c:	if (env->order == 2)
+srcs/algo.c:		env->coeff -= distance(env, x, y) - origindistance(env, x, y);
+srcs/dominance.c:	dom->z1 = zone(env, dom, env->xtab / 2, (env->ytab / 2) + 4);
+srcs/dominance.c:	dom->ystart = (env->ytab / 2) + 4;
+srcs/dominance.c:	dom->z2 = zone(env, dom, env->xtab / 2, env->ytab + 4);
+srcs/dominance.c:	dom->xstart = env->xtab / 2;
+srcs/dominance.c:	dom->z3 = zone(env, dom, env->xtab, (env->ytab / 2) + 4);
+srcs/dominance.c:	dom->ystart = (env->ytab / 2) + 4;
+srcs/dominance.c:	dom->z4 = zone(env, dom, env->xtab, env->ytab + 4);
+srcs/dominance.c:	env->dominance = dom;
+srcs/find_distances.c:			if (tab->line[i] == env->him || tab->line[i] == env->him + 32)
+srcs/find_distances.c:				env->xhim = tab->x;
+srcs/find_distances.c:				env->yhim = i;
+srcs/find_distances.c:			if (tab->line[i] == env->me || tab->line[i] == env->me + 32)
+srcs/find_distances.c:				env->xme = tab->x;
+srcs/find_distances.c:				env->yme = i;
+srcs/find_distances.c:	difx = absolute(env->xhim - x);
+srcs/find_distances.c:	dify = absolute(env->yhim + 4 - y);
+srcs/freeall.c:	tmp = env->origin;
+srcs/freeall.c:	order = env->order;
+srcs/freeall.c:	free(env->tab);
+srcs/freeall.c:	free(env->piece);
+srcs/gather_result.c:	env->count = 0;
+srcs/gather_result.c:	env->score = 0;
+srcs/gather_result.c:	env->coeff = 0;
+srcs/gather_result.c:	me = env->me;
+srcs/gather_result.c:	if (c == '*' && i - 4 >= env->ytab)
+srcs/gather_result.c:	if (c == '*' && (tab->line[i] == env->him || tab->line[i] == env->him + 32))
+srcs/gather_result.c:		env->count += 1;
+srcs/gather_result.c:		if (env->count > 1)
+srcs/gather_result.c:	while (piece->x != env->truex)
+srcs/gather_result.c:		if (env->truey != -1)
+srcs/gather_result.c:			j = env->truey;
+srcs/gather_result.c:	if (env->count == 1 && ((x + env->xpiece - env->truex <= env->xtab)))
+srcs/gather_result.c:		// 	add_result(env, x, i, env->score);
+srcs/gather_result.c:			if (!RESULT || env->coeff >= RESULT->coeff)
+srcs/gather_result.c:				add_result(env, x, i, env->score);
+srcs/gather_result.c:		while (i <= env->ytab + 4)
+srcs/init.c:	if (env->truey == -1)
+srcs/init.c:		env->truey = truey(str);
+srcs/init.c:	if (truey(str) < env->truey)
+srcs/init.c:		env->truey = truey(str);
+srcs/origin.c:	env->origin = origin;
+srcs/origin.c:	origin->xme = env->xme;
+srcs/origin.c:	origin->yme = env->yme;
+srcs/origin.c:	origin->xhim = env->xhim;
+srcs/origin.c:	origin->yhim = env->yhim;
+srcs/parsing.c:	if (env->order == 1)
+srcs/parsing.c:		env->me = 'O';
+srcs/parsing.c:		env->him = 'X';
+srcs/parsing.c:	if (env->order == 2)
+srcs/parsing.c:		env->me = 'X';
+srcs/parsing.c:		env->him = 'O';
+srcs/parsing.c:	if (line[0] == '$' && env->init == 0)
+srcs/parsing.c:		env->order = atoi(&line[10]);
+srcs/parsing.c:	if (env->init == 0)
+srcs/parsing_tools.c:		env->tab = tab;
+srcs/parsing_tools.c:		env->xtab = x;
+srcs/parsing_tools.c:		env->ytab = y;
+srcs/parsing_tools.c:		env->piece = tab;
+srcs/parsing_tools.c:		env->xpiece = x;
+srcs/parsing_tools.c:		env->ypiece = y;
+srcs/print.c:	ft_putnbr_fd(res->x - env->truex, 1);
+srcs/print.c:	ft_putnbr_fd(res->y - 4 - env->truey, 1);
+srcs/proxdomi.c:	if (x <= env->xtab / 2 && y <= env->ytab / 2 + 4)
+srcs/proxdomi.c:	if (x <= env->xtab / 2 && y >= env->ytab / 2 + 4)
+srcs/proxdomi.c:	if (x >= env->xtab / 2 && y <= env->ytab / 2 + 4)
+srcs/proxdomi.c:	if (x >= env->xtab / 2 && y >= env->ytab / 2 + 4)
+srcs/result_tools.c:		new->distance = env->distance;
+srcs/result_tools.c:		new->coeff = env->coeff;
+srcs/result_tools.c:		new->distance = env->distance;
+srcs/result_tools.c:		new->coeff = env->coeff;
+srcs/utility.c:		if (i == env->ypiece && piece)
+srcs/utility.c:	env->truex = x;

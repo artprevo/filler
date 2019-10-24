@@ -12,7 +12,7 @@
 
 NAME = artprevo.filler
 FLAGS = -Wall -Wextra -Werror
-SRC = *.c
+SRC = srcs/*.c
 
 all: $(NAME)
 

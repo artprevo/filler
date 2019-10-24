@@ -16,20 +16,21 @@
 # include "../libft/libft.h"
 # define BUFFER_SIZE 1000000
 
-# define LINETAB	(env->linetab)
-# define LINEPIECE	(env->linepiece)
-# define RESULT		(env->result)
-# define POS		(env->pos)
-# define HIM		(env->him)
-# define ME			(env->me)
-# define DOM		(env->dominance)
-# define ORIGIN	(env->origin)
+# define LINETAB		(env->linetab)
+# define LINEPIECE		(env->linepiece)
+# define RESULT			(env->result)
+# define POS			(env->pos)
+# define HIM			(env->him)
+# define ME				(env->me)
+# define DOM			(env->dominance)
+# define ORIGIN			(env->origin)
 
 typedef	struct			s_env
 {
 	char				**tab;
 	char				**piece;
 	int					truex;
+	int					truey;
 	int					xtab;
 	int					ytab;
 	int					xpiece;
@@ -38,19 +39,19 @@ typedef	struct			s_env
 	char				me;
 	char				him;
 	int					count;
-	int 				score;
-	int				distance;
+	int					score;
+	int					distance;
 	int					xhim;
 	int					yhim;
 	int					xme;
 	int					yme;
 	int					init;
-	int 				coeff;
+	int					coeff;
 	struct s_linetab	*linetab;
 	struct s_linepiece	*linepiece;
 	struct s_result		*result;
 	struct s_dominance	*dominance;
-	struct s_origin			*origin;
+	struct s_origin		*origin;
 }						t_env;
 
 typedef struct			s_linetab
@@ -65,7 +66,6 @@ typedef struct			s_linetab
 typedef struct			s_linepiece
 {
 	char				*line;
-	int					truey;
 	int					x;
 	int					empty;
 	struct s_linepiece	*next;
@@ -77,20 +77,20 @@ typedef struct			s_result
 	int					x;
 	int					y;
 	int					distance;
-	int 				score;
-	int 				coeff;
+	int					score;
+	int					coeff;
 }						t_result;
 
 typedef struct			s_dominance
 {
 	int					z1;
-	int 				z2;
-	int 				z3;
-	int 				z4;
-	int 				xstart;
-	int 				ystart;
-	int 				result;
-}										t_dominance;
+	int					z2;
+	int					z3;
+	int					z4;
+	int					xstart;
+	int					ystart;
+	int					result;
+}						t_dominance;
 
 typedef struct			s_origin
 {
@@ -98,52 +98,52 @@ typedef struct			s_origin
 	int					yme;
 	int					xhim;
 	int					yhim;
-}										t_origin;
+}						t_origin;
 
-int	main();
+int						main(void);
 
-/*
- * init.c
- */
-t_result        	*ft_initresult();
-t_linetab           *ft_initlinetab(char *str, int x, int empty);
-t_linepiece         *ft_initlinepiece(char *str, int x, int empty);
-t_env   			*ft_processinit();
+void					processparsing(t_env *env);
 
-/*
- * parsing.c
- */
-int             create_tab(t_env *env, char *str, char c);
-void            create_linepiece(t_env *env, char *str, int j);
-void            create_linetab(t_env *env, char *str);
+t_result        		*ft_initresult(int x, int y);
+t_linetab           	*ft_initlinetab(char *str, int x, int empty);
+t_linepiece         	*ft_initlinepiece(t_env *env, char *str, int x, int empty);
+t_env   				*ft_processinit(void);
 
-/*
- * utility.c
- */
-int     ft_isempty(char *str);
+int						create_tab(t_env *env, char *str, char c);
+void					create_linepiece(t_env *env, char *str, int j);
+void					create_linetab(t_env *env, char *str);
 
-/*
- * position.c
- */
-void    findposition(t_env *env);
+void					findposition(t_env *env);
 
-/*
- * freeall.c
- */
-t_env   *tafreetatoucompri(t_env *env);
+t_env					*tafreetatoucompri(t_env *env);
 
-void		origin(t_env *env);
-int     origindistance(t_env *env, int x);
+void					origin(t_env *env);
+int						origindistance(t_env *env, int x, int y);
 
-int    gatherresult(t_env *env);
-t_result    *assignres(t_env *env);
-void	truex(t_env *env);
-void    printstr(char *str);
-void    printnbr(int nbr);
-int		findhim(t_env *env);
-int		findme(t_env *env);
-int		distance(t_env *env, int x, int y);
-void bottompiece(t_env *env);
-void dominance (t_env *env);
-int absolute(int i);
+void					domiscore(t_env *env, int x, int y);
+int						gatherresult(t_env *env);
+t_result				*assignres(t_env *env);
+
+void					truex(t_env *env);
+int						truey(char *str);
+void					bottompiece(t_env *env);
+int						ft_isempty(char *str);
+
+void					printstr(char *str);
+void					printnbr(int nbr);
+void					printresult(t_env *env);
+
+int						findhim(t_env *env);
+int						findme(t_env *env);
+int						distance(t_env *env, int x, int y);
+
+void					algo(t_env *env, int x, int y);
+
+void					add_result(t_env *env, int x, int y, int score);
+
+int						findzone(t_env *env, int x, int y);
+
+void					dominance (t_env *env);
+int						absolute(int i);
+
 #endif

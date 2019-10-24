@@ -4,4 +4,4 @@ cd ..
 cd ..
 cd checker
 cd filler_check
-sh correction.sh -b players/artprevo.filler
+sh correction.sh -b players/artprevo.filler -r 
