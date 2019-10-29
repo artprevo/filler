@@ -46,8 +46,9 @@ static int		findytab(char *str)
 	int		i;
 	int		j;
 	int		k;
-	char	tmp[4];
+	char	*tmp;
 
+	tmp = ft_strnew(4);
 	i = 0;
 	j = 0;
 	k = 0;
@@ -59,7 +60,9 @@ static int		findytab(char *str)
 			k++;
 		i++;
 	}
-	return (ft_atoi(tmp));
+	i = ft_atoi(tmp);
+	free(tmp);
+	return (i);
 }
 
 void			create_linetab(t_env *env, char *str)

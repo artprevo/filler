@@ -12,7 +12,7 @@
 
 #include "filler.h"
 
-int		findhim(t_env *env)
+int				findhim(t_env *env)
 {
 	t_linetab		*tab;
 	int				i;
@@ -36,7 +36,7 @@ int		findhim(t_env *env)
 	return (0);
 }
 
-int		findme(t_env *env)
+int				findme(t_env *env)
 {
 	t_linetab		*tab;
 	int				i;
@@ -60,19 +60,55 @@ int		findme(t_env *env)
 	return (0);
 }
 
-int		absolute(int i)
+int				absolute(int i)
 {
 	if (i < 0)
 		i = -i;
 	return (i);
 }
 
-int		distance(t_env *env, int x, int y)
+static int		scoreptwo(t_env *env, int x, int y)
 {
-	int		difx;
-	int		dify;
+	t_linetab	*tab;
+	int			xhim;
+	int			yhim;
+	int			i;
 
-	difx = absolute(env->xhim - x);
-	dify = absolute(env->yhim + 4 - y);
-	return (difx + dify);
+	tab = LINETAB;
+	while (tab)
+	{
+		i = 4;
+		while (tab->line[i])
+		{
+			if (tab->line[i] == env->him || tab->line[i] == env->him + 32)
+			{
+				yhim = i;
+				xhim = tab->x;
+			}
+			i++;
+		}
+		tab = tab->next;
+	}
+	return (absolute(xhim - x) + 4 * absolute(yhim - y));
+}
+
+int				distance(t_env *env, int x, int y)
+{
+	int			score;
+	t_origin	*origin;
+
+	origin = ORIGIN;
+	score = 0;
+	if (origin->xhim > origin->xme)
+		score += absolute(env->xhim - x) + absolute(env->yhim + 4 - y);
+	else if (origin->xhim < origin->xme)
+		score = scoreptwo(env, x, y);
+	if (env->xtab < 20 && env->order == 2 && x > 3)
+		score = 0 - (env->xtab - x);
+	else if (env->xtab < 40 && env->order == 2)
+	{
+		if (x < 7 || score == 17)
+			score -= 0 - (env->xtab - x);
+	}
+	return (score);
 }

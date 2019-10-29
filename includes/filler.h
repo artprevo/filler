@@ -6,15 +6,20 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:27:52 by artprevo          #+#    #+#             */
-/*   Updated: 2019/10/18 17:38:51 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/10/26 17:10:49 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
 
-# include "../libft/libft.h"
-# define BUFFER_SIZE 1000000
+# include "libft.h"
+# define BUFFER_SIZE	1000000
+# define SHIFT_MIN		32
+# define TRUE			1
+# define FALSE 			0
+# define SUCCESS 		0
+# define FAILURE 		-1
 
 # define LINETAB		(env->linetab)
 # define LINEPIECE		(env->linepiece)
@@ -24,11 +29,17 @@
 # define ME				(env->me)
 # define DOM			(env->dominance)
 # define ORIGIN			(env->origin)
+# define COUPS			(env->origin->coups)
 
 typedef	struct			s_env
 {
 	char				**tab;
 	char				**piece;
+	struct s_linetab	*linetab;
+	struct s_linepiece	*linepiece;
+	struct s_result		*result;
+	struct s_dominance	*dominance;
+	struct s_origin		*origin;
 	int					truex;
 	int					truey;
 	int					xtab;
@@ -36,8 +47,6 @@ typedef	struct			s_env
 	int					xpiece;
 	int					ypiece;
 	int					order;
-	char				me;
-	char				him;
 	int					count;
 	int					score;
 	int					distance;
@@ -47,11 +56,9 @@ typedef	struct			s_env
 	int					yme;
 	int					init;
 	int					coeff;
-	struct s_linetab	*linetab;
-	struct s_linepiece	*linepiece;
-	struct s_result		*result;
-	struct s_dominance	*dominance;
-	struct s_origin		*origin;
+	char				me;
+	char				him;
+	char				pad[6];
 }						t_env;
 
 typedef struct			s_linetab
@@ -98,16 +105,15 @@ typedef struct			s_origin
 	int					yme;
 	int					xhim;
 	int					yhim;
+	int					coups;
 }						t_origin;
 
-int						main(void);
+int						processparsing(t_env *env, int i, int j, int limit);
 
-void					processparsing(t_env *env);
-
-t_result        		*ft_initresult(int x, int y);
-t_linetab           	*ft_initlinetab(char *str, int x, int empty);
-t_linepiece         	*ft_initlinepiece(t_env *env, char *str, int x, int empty);
-t_env   				*ft_processinit(void);
+t_result				*ft_initresult(int x, int y);
+t_linetab				*ft_initlinetab(char *str, int x, int empty);
+t_linepiece				*ft_initlinepiece(t_env *env, char *str, int x, int e);
+t_env					*ft_processinit(void);
 
 int						create_tab(t_env *env, char *str, char c);
 void					create_linepiece(t_env *env, char *str, int j);
@@ -145,5 +151,9 @@ int						findzone(t_env *env, int x, int y);
 
 void					dominance (t_env *env);
 int						absolute(int i);
+
+int						checktabintegrity(t_env *env, char *str, int flag);
+int						checkpieceintegrity(t_env *env, char *str, int flag);
+int						checkplayerintegrity(t_env *env, char *line);
 
 #endif

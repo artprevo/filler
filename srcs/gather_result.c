@@ -23,7 +23,7 @@ static	void	putres(t_env *env, int x, int i)
 {
 	if (env->count == 1 && ((x + env->xpiece - env->truex <= env->xtab)))
 	{
-		if (!RESULT || (env->coeff >= RESULT->coeff && env->order == 1))
+		if (!RESULT || (env->coeff <= RESULT->coeff))
 			add_result(env, x, i, env->score);
 	}
 }
@@ -93,8 +93,6 @@ int				gatherresult(t_env *env)
 			testpos(env, tab->x, i);
 			i++;
 		}
-		if (RESULT && env->order == 2)
-			break ;
 		tab = tab->next;
 	}
 	if (!RESULT)

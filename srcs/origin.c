@@ -33,6 +33,7 @@ static	t_origin			*initorigin(t_env *env)
 	new->yme = 0;
 	new->xhim = 0;
 	new->yhim = 0;
+	new->coups = 0;
 	return (new);
 }
 
