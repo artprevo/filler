@@ -1,6 +1,6 @@
 # Filler
 
-Filler is an algorithmic game based on filling a grid of know size. The virtual machine sends to a player a placable random piece of a random size, pretty much like in Tetris. 
+Filler is an algorithmic game based on filling a grid of known size. The virtual machine sends to a player a placable random piece of a random size, pretty much like in Tetris. 
 First player not able to place a piece or giving a wrong position loose.
 
 The purpose of this project was to create the player part. Making an algorithm capable of analyzing a game state and making moves based on enemy positions.
